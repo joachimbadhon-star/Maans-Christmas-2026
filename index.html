@@ -3,149 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Merry Christmas, Maan!</title>
+  <title>Maan's Christmas Countdown</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            kuromi: {
-              night: '#070b19',
-              card: 'rgba(15, 23, 42, 0.75)',
-              accent: '#f472b6',
-              purple: '#c084fc',
-              gold: '#fbbf24'
-            }
-          },
-          fontFamily: {
-            serif: ['Cinzel', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    .glass-panel {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(244, 114, 182, 0.2);
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-serif-title {
+      font-family: 'Cinzel', serif;
+    }
+    .glass-card {
+      background: rgba(10, 16, 35, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .glow-text {
+      text-shadow: 0 0 15px rgba(186, 218, 255, 0.4);
+    }
+    .glow-number {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
     }
   </style>
 </head>
-<body class="bg-kuromi-night text-slate-100 font-sans min-h-screen relative overflow-x-hidden select-none bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to bottom, rgba(7, 11, 25, 0.82), rgba(15, 23, 42, 0.88)), url('maan.jpg');">
+<body class="bg-slate-950 text-slate-100 min-h-screen relative overflow-x-hidden bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to bottom, rgba(5, 8, 22, 0.82), rgba(10, 15, 30, 0.90)), url('maan.jpg');">
 
-  <!-- Background Snow Canvas -->
+  <!-- Background Stars / Snow Canvas -->
   <canvas id="snowCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <main class="relative z-10 max-w-2xl mx-auto px-4 py-8 space-y-8 min-h-screen flex flex-col justify-between">
+  <main class="relative z-10 max-w-xl mx-auto px-4 py-6 space-y-6 min-h-screen flex flex-col justify-between">
     
-    <!-- Top Header & Audio Controls -->
-    <header class="text-center space-y-4 pt-4">
-      <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase bg-kuromi-accent/20 text-kuromi-accent rounded-full border border-kuromi-accent/30">
-        Special Christmas Countdown
-      </span>
-      <h1 class="text-4xl md:text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-kuromi-accent via-kuromi-purple to-kuromi-gold">
-        Merry Christmas, Maan ✨
-      </h1>
+    <!-- Top Pill Buttons -->
+    <header class="space-y-6 pt-2">
+      <div class="flex items-center justify-between gap-3">
+        <button class="flex-1 bg-purple-950/60 border border-purple-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs font-medium text-purple-200 backdrop-blur-md shadow-lg">
+          <span>🧙‍♀️</span>
+          <span>Maan's Cozy Corner</span>
+          <span>🌙</span>
+        </button>
 
-      <!-- Real Audio Player Button -->
-      <div class="flex justify-center pt-2">
-        <button id="musicBtn" onclick="toggleAudio()" class="glass-panel px-5 py-2.5 rounded-full flex items-center space-x-3 hover:border-kuromi-accent transition-all duration-300 shadow-lg">
-          <span id="musicIcon" class="text-kuromi-accent text-lg">🎵</span>
-          <span id="musicText" class="text-sm font-medium text-slate-200">Play Background Music</span>
+        <button id="musicBtn" onclick="toggleAudio()" class="flex-1 bg-indigo-950/60 border border-indigo-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs font-medium text-indigo-200 backdrop-blur-md shadow-lg hover:border-indigo-400 transition-all">
+          <span>🎵</span>
+          <span id="musicText">Play "Mary, Did You Know?"</span>
         </button>
       </div>
+
       <audio id="bgAudio" loop src="music.mp3"></audio>
+
+      <!-- Main Header -->
+      <div class="text-center space-y-3">
+        <div class="inline-block px-4 py-1 text-[11px] font-semibold tracking-widest text-indigo-300 uppercase bg-indigo-950/40 rounded-full border border-indigo-500/20">
+          ❄️ Christmas 2026 Countdown ❄️
+        </div>
+        <h1 class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 tracking-wider leading-tight glow-text uppercase">
+          My Man's Christmas Countdown
+        </h1>
+        <p class="text-xs md:text-sm italic text-slate-300 font-serif-title max-w-md mx-auto leading-relaxed opacity-90">
+          "Counting down every quiet second until Christmas morning, wrapped in love with my dearest Maan."
+        </p>
+      </div>
     </header>
 
-    <!-- Countdown Timer Panel -->
-    <section class="glass-panel rounded-2xl p-6 text-center space-y-6 shadow-2xl">
-      <h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Countdown to Christmas Morning</h2>
-      
-      <div id="countdownGrid" class="grid grid-cols-4 gap-2 md:gap-4">
-        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div id="days" class="text-2xl md:text-4xl font-serif font-bold text-kuromi-accent">00</div>
-          <div class="text-[10px] md:text-xs text-slate-400 uppercase mt-1">Days</div>
+    <!-- Countdown Timer Glass Panel -->
+    <section class="glass-card rounded-3xl p-6 text-center space-y-5">
+      <div class="space-y-1">
+        <div class="flex items-center justify-center space-x-2 text-[11px] tracking-widest text-indigo-300 uppercase font-medium">
+          <span>✨</span>
+          <span>Time Remaining Until</span>
+          <span>🌙</span>
         </div>
-        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div id="hours" class="text-2xl md:text-4xl font-serif font-bold text-kuromi-purple">00</div>
-          <div class="text-[10px] md:text-xs text-slate-400 uppercase mt-1">Hours</div>
-        </div>
-        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div id="minutes" class="text-2xl md:text-4xl font-serif font-bold text-kuromi-accent">00</div>
-          <div class="text-[10px] md:text-xs text-slate-400 uppercase mt-1">Mins</div>
-        </div>
-        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div id="seconds" class="text-2xl md:text-4xl font-serif font-bold text-kuromi-gold">00</div>
-          <div class="text-[10px] md:text-xs text-slate-400 uppercase mt-1">Secs</div>
+        <div class="flex items-center justify-center space-x-2 text-base md:text-lg font-serif-title font-bold text-slate-100">
+          <span>🎄</span>
+          <span>December 25, 2026 • 00:00:00 AM</span>
+          <span>🎄</span>
         </div>
       </div>
+
+      <!-- Numbers Grid -->
+      <div id="countdownGrid" class="grid grid-cols-2 gap-3 pt-2">
+        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
+          <div id="days" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">000</div>
+          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Days</div>
+        </div>
+        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
+          <div id="hours" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
+          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Hours</div>
+        </div>
+        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
+          <div id="minutes" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
+          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Minutes</div>
+        </div>
+        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
+          <div id="seconds" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
+          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Seconds</div>
+        </div>
+      </div>
+
+      <p id="timeSummary" class="text-xs italic text-indigo-200/80 pt-1">
+        ✨ Exactly remaining for Maan! ✨
+      </p>
+
+      <button onclick="triggerConfetti()" class="text-xs text-indigo-300 hover:text-indigo-100 underline tracking-wide transition-all pt-1">
+        ✨ Preview Christmas Morning Mode
+      </button>
     </section>
 
-    <!-- Scripture Card -->
-    <section class="glass-panel rounded-2xl p-6 space-y-4 shadow-xl relative overflow-hidden">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <span class="text-xs font-semibold text-kuromi-gold uppercase tracking-wider">Bible Verse</span>
-        <button onclick="nextVerse()" class="text-xs text-kuromi-accent hover:underline">Next Verse ➔</button>
+    <!-- Sacred Words / Scripture Panel -->
+    <section class="glass-card rounded-3xl p-5 space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+        <div class="flex items-center space-x-2 text-xs font-semibold text-indigo-300 uppercase tracking-wider">
+          <span>📖</span>
+          <span>Sacred Words of Love</span>
+        </div>
+        <button onclick="nextVerse()" class="text-slate-400 hover:text-white text-xs">✝️</button>
       </div>
-      <p id="verseText" class="text-base md:text-lg italic text-slate-200 leading-relaxed font-serif">
+      <p id="verseText" class="text-sm italic text-slate-200 leading-relaxed font-serif-title pt-1">
         "For unto us a Child is born, unto us a Son is given..."
       </p>
-      <p id="verseRef" class="text-xs font-semibold text-right text-kuromi-purple">— Isaiah 9:6</p>
-    </section>
-
-    <!-- Interactive Letter Button -->
-    <section class="text-center space-y-4 pb-4">
-      <div class="flex justify-center gap-3 flex-wrap">
-        <button onclick="openLetter()" class="bg-gradient-to-r from-kuromi-accent to-kuromi-purple text-slate-900 font-semibold px-6 py-3 rounded-xl shadow-lg hover:opacity-90 transition-all transform active:scale-95">
-          Read My Letter 💌
-        </button>
-        <button onclick="triggerConfetti()" class="glass-panel text-slate-200 font-semibold px-5 py-3 rounded-xl hover:border-kuromi-gold transition-all">
-          Preview Christmas Morning Mode ✨
-        </button>
-      </div>
+      <p id="verseRef" class="text-xs font-semibold text-right text-indigo-300">— Isaiah 9:6</p>
     </section>
 
     <!-- Footer -->
-    <footer class="text-center text-xs text-slate-500 py-4">
+    <footer class="text-center text-[11px] text-slate-500 py-2">
       Made with ❤️ for Maan
     </footer>
   </main>
 
-  <!-- Letter Modal -->
-  <div id="letterModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="glass-panel max-w-lg w-full rounded-2xl p-6 space-y-4 border border-kuromi-accent/40 shadow-2xl relative max-h-[80vh] overflow-y-auto">
-      <h3 class="text-2xl font-serif font-bold text-kuromi-accent">Merry Christmas, Maan</h3>
-      <div class="text-sm text-slate-300 space-y-3 leading-relaxed">
-        <p>Merry Christmas, Maan!</p>
-        <p>I built this little corner of the web specifically for you to countdown to Christmas Day. Hope it brings a little extra warmth and joy to your holiday season.</p>
-        <p>Wishing you moments filled with peace, laughter, and light!</p>
-      </div>
-      <div class="pt-4 text-right">
-        <button onclick="closeLetter()" class="px-4 py-2 bg-slate-800 text-slate-200 rounded-lg text-xs font-semibold hover:bg-slate-700">Close</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // Audio Player Toggle
     const audio = document.getElementById('bgAudio');
-    const musicIcon = document.getElementById('musicIcon');
     const musicText = document.getElementById('musicText');
 
     function toggleAudio() {
       if (audio.paused) {
         audio.play();
-        musicIcon.textContent = '⏸️';
         musicText.textContent = 'Pause Music';
       } else {
         audio.pause();
-        musicIcon.textContent = '🎵';
-        musicText.textContent = 'Play Background Music';
+        musicText.textContent = 'Play "Mary, Did You Know?"';
       }
     }
 
@@ -156,7 +154,7 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.getElementById('countdownGrid').innerHTML = '<div class="col-span-4 text-2xl font-serif text-kuromi-gold py-4">🎄 Merry Christmas! 🎄</div>';
+        document.getElementById('countdownGrid').innerHTML = '<div class="col-span-2 text-xl font-serif-title text-indigo-200 py-4">🎄 Merry Christmas! 🎄</div>';
         return;
       }
 
@@ -165,10 +163,12 @@
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById('days').innerText = String(days).padStart(2, '0');
+      document.getElementById('days').innerText = String(days).padStart(3, '0');
       document.getElementById('hours').innerText = String(hours).padStart(2, '0');
       document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
       document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+      document.getElementById('timeSummary').innerText = `✨ Exactly ${days} days, ${hours} hrs, and ${minutes} mins remaining for Maan! ✨`;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -186,16 +186,12 @@
       document.getElementById('verseRef').innerText = verses[verseIdx].ref;
     }
 
-    // Letter Modal
-    function openLetter() { document.getElementById('letterModal').classList.remove('hidden'); }
-    function closeLetter() { document.getElementById('letterModal').classList.add('hidden'); }
-
     // Confetti
     function triggerConfetti() {
       confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     }
 
-    // Canvas Snow
+    // Canvas Snow/Stars
     const canvas = document.getElementById('snowCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -206,16 +202,16 @@
       height = canvas.height = window.innerHeight;
     });
 
-    const flakes = Array.from({ length: 40 }, () => ({
+    const flakes = Array.from({ length: 50 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      r: Math.random() * 2 + 1,
-      d: Math.random() * 1 + 0.5
+      r: Math.random() * 1.8 + 0.5,
+      d: Math.random() * 0.8 + 0.3
     }));
 
     function drawSnow() {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
       ctx.beginPath();
       flakes.forEach(f => {
         ctx.moveTo(f.x, f.y);
