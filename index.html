@@ -1,231 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maan's Christmas Countdown</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .font-serif-title {
-      font-family: 'Cinzel', serif;
-    }
-    .glass-card {
-      background: rgba(10, 16, 35, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-    .glow-text {
-      text-shadow: 0 0 15px rgba(186, 218, 255, 0.4);
-    }
-    .glow-number {
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-    }
-  </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen relative overflow-x-hidden bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to bottom, rgba(5, 8, 22, 0.82), rgba(10, 15, 30, 0.90)), url('maan.jpg');">
-
-  <!-- Background Stars / Snow Canvas -->
-  <canvas id="snowCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
-
-  <main class="relative z-10 max-w-xl mx-auto px-4 py-6 space-y-6 min-h-screen flex flex-col justify-between">
-    
-    <!-- Top Pill Buttons -->
-    <header class="space-y-6 pt-2">
-      <div class="flex items-center justify-between gap-3">
-        <button class="flex-1 bg-purple-950/60 border border-purple-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs font-medium text-purple-200 backdrop-blur-md shadow-lg">
-          <span>🧙‍♀️</span>
-          <span>Maan's Cozy Corner</span>
-          <span>🌙</span>
-        </button>
-
-        <button id="musicBtn" onclick="toggleAudio()" class="flex-1 bg-indigo-950/60 border border-indigo-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs font-medium text-indigo-200 backdrop-blur-md shadow-lg hover:border-indigo-400 transition-all">
-          <span>🎵</span>
-          <span id="musicText">Play "Mary, Did You Know?"</span>
-        </button>
-      </div>
-
-      <audio id="bgAudio" loop src="music.mp3"></audio>
-
-      <!-- Main Header -->
-      <div class="text-center space-y-3">
-        <div class="inline-block px-4 py-1 text-[11px] font-semibold tracking-widest text-indigo-300 uppercase bg-indigo-950/40 rounded-full border border-indigo-500/20">
-          ❄️ Christmas 2026 Countdown ❄️
-        </div>
-        <h1 class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 tracking-wider leading-tight glow-text uppercase">
-          My Man's Christmas Countdown
-        </h1>
-        <p class="text-xs md:text-sm italic text-slate-300 font-serif-title max-w-md mx-auto leading-relaxed opacity-90">
-          "Counting down every quiet second until Christmas morning, wrapped in love with my dearest Maan."
-        </p>
-      </div>
-    </header>
-
-    <!-- Countdown Timer Glass Panel -->
-    <section class="glass-card rounded-3xl p-6 text-center space-y-5">
-      <div class="space-y-1">
-        <div class="flex items-center justify-center space-x-2 text-[11px] tracking-widest text-indigo-300 uppercase font-medium">
-          <span>✨</span>
-          <span>Time Remaining Until</span>
-          <span>🌙</span>
-        </div>
-        <div class="flex items-center justify-center space-x-2 text-base md:text-lg font-serif-title font-bold text-slate-100">
-          <span>🎄</span>
-          <span>December 25, 2026 • 00:00:00 AM</span>
-          <span>🎄</span>
-        </div>
-      </div>
-
-      <!-- Numbers Grid -->
-      <div id="countdownGrid" class="grid grid-cols-2 gap-3 pt-2">
-        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
-          <div id="days" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">000</div>
-          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Days</div>
-        </div>
-        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
-          <div id="hours" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
-          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Hours</div>
-        </div>
-        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
-          <div id="minutes" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
-          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Minutes</div>
-        </div>
-        <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-center items-center">
-          <div id="seconds" class="text-3xl md:text-4xl font-serif-title font-bold text-white glow-number">00</div>
-          <div class="text-[10px] tracking-widest text-slate-400 uppercase mt-1">Seconds</div>
-        </div>
-      </div>
-
-      <p id="timeSummary" class="text-xs italic text-indigo-200/80 pt-1">
-        ✨ Exactly remaining for Maan! ✨
-      </p>
-
-      <button onclick="triggerConfetti()" class="text-xs text-indigo-300 hover:text-indigo-100 underline tracking-wide transition-all pt-1">
-        ✨ Preview Christmas Morning Mode
-      </button>
-    </section>
-
-    <!-- Sacred Words / Scripture Panel -->
-    <section class="glass-card rounded-3xl p-5 space-y-3">
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
-        <div class="flex items-center space-x-2 text-xs font-semibold text-indigo-300 uppercase tracking-wider">
-          <span>📖</span>
-          <span>Sacred Words of Love</span>
-        </div>
-        <button onclick="nextVerse()" class="text-slate-400 hover:text-white text-xs">✝️</button>
-      </div>
-      <p id="verseText" class="text-sm italic text-slate-200 leading-relaxed font-serif-title pt-1">
-        "For unto us a Child is born, unto us a Son is given..."
-      </p>
-      <p id="verseRef" class="text-xs font-semibold text-right text-indigo-300">— Isaiah 9:6</p>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center text-[11px] text-slate-500 py-2">
-      Made with ❤️ for Maan
-    </footer>
-  </main>
-
-  <script>
-    // Audio Player Toggle
-    const audio = document.getElementById('bgAudio');
-    const musicText = document.getElementById('musicText');
-
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play();
-        musicText.textContent = 'Pause Music';
-      } else {
-        audio.pause();
-        musicText.textContent = 'Play "Mary, Did You Know?"';
-      }
-    }
-
-    // Countdown Logic
-    const targetDate = new Date("December 25, 2026 00:00:00+06:00").getTime();
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        document.getElementById('countdownGrid').innerHTML = '<div class="col-span-2 text-xl font-serif-title text-indigo-200 py-4">🎄 Merry Christmas! 🎄</div>';
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('days').innerText = String(days).padStart(3, '0');
-      document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-      document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-      document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-
-      document.getElementById('timeSummary').innerText = `✨ Exactly ${days} days, ${hours} hrs, and ${minutes} mins remaining for Maan! ✨`;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Verses Array
-    const verses = [
-      { text: '"For unto us a Child is born, unto us a Son is given..."', ref: '— Isaiah 9:6' },
-      { text: '"Glory to God in the highest, and on earth peace, good will toward men."', ref: '— Luke 2:14' },
-      { text: '"Every good gift and every perfect gift is from above..."', ref: '— James 1:17' }
-    ];
-    let verseIdx = 0;
-    function nextVerse() {
-      verseIdx = (verseIdx + 1) % verses.length;
-      document.getElementById('verseText').innerText = verses[verseIdx].text;
-      document.getElementById('verseRef').innerText = verses[verseIdx].ref;
-    }
-
-    // Confetti
-    function triggerConfetti() {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    }
-
-    // Canvas Snow/Stars
-    const canvas = document.getElementById('snowCanvas');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-
-    const flakes = Array.from({ length: 50 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 1.8 + 0.5,
-      d: Math.random() * 0.8 + 0.3
-    }));
-
-    function drawSnow() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.beginPath();
-      flakes.forEach(f => {
-        ctx.moveTo(f.x, f.y);
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-        f.y += f.d;
-        if (f.y > height) {
-          f.y = 0;
-          f.x = Math.random() * width;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maan's Christmas Countdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712;
         }
-      });
-      ctx.fill();
-      requestAnimationFrame(drawSnow);
-    }
-    drawSnow();
-  </script>
+        .bg-image-layer {
+            background-image: url('IMG_20250705_135435.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.25; /* Low opacity so her picture shows softly in the background */
+        }
+        .font-serif-title {
+            font-family: 'Cinzel', serif;
+        }
+        .glass-card {
+            background: rgba(10, 16, 35, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .glow-text {
+            text-shadow: 0 0 15px rgba(186, 218, 255, 0.4);
+        }
+        .glow-number {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen relative overflow-x-hidden">
+
+    <!-- Background Image Layer (Soft & Subtle) -->
+    <div class="fixed inset-0 bg-image-layer z-0 pointer-events-none"></div>
+
+    <!-- Background Stars / Snow Canvas -->
+    <canvas id="snowCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <main class="relative z-10 max-w-xl mx-auto px-4 py-6 space-y-8 min-h-screen flex flex-col justify-between">
+        
+        <!-- Top Pill Buttons -->
+        <header class="space-y-6 pt-2">
+            <div class="flex items-center justify-between gap-3">
+                <button class="flex-1 bg-purple-950/40 border border-purple-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs text-purple-200 backdrop-blur-md">
+                    <span>🧘‍♀️</span>
+                    <span>Maan's Cozy Corner</span>
+                    <span>🌙</span>
+                </button>
+                
+                <button id="musicBtn" onclick="toggleAudio()" class="flex-1 bg-indigo-950/40 border border-indigo-500/30 rounded-full py-2 px-4 flex items-center justify-center space-x-2 text-xs text-indigo-200 backdrop-blur-md">
+                    <span>🎵</span>
+                    <span id="musicText">Play "Mary, Did You Know?"</span>
+                </button>
+            </div>
+
+            <audio id="bgAudio" loop src="music.mp3"></audio>
+
+            <!-- Main Header -->
+            <div class="text-center space-y-3">
+                <div class="inline-block px-4 py-1 text-[11px] font-semibold tracking-widest text-indigo-300 uppercase bg-indigo-950/60 border border-indigo-500/30 rounded-full">
+                    ❄️️ Christmas 2026 Countdown ❄️
+                </div>
+                <h1 class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 tracking-wider leading-tight glow-text uppercase">
+                    My Maan's Christmas Countdown
+                </h1>
+                <p class="text-xs md:text-sm italic text-slate-300 font-serif-title max-w-md mx-auto leading-relaxed opacity-90">
+                    "Counting down every quiet second until Christmas morning, wrapped in love with my dearest Maan."
+                </p>
+            </div>
+        </header>
+
+        <!-- Countdown Timer Glass Panel -->
+        <section class="glass-card rounded-3xl p-6 text-center space-y-5">
+            <div class="space-y-1">
+                <div class="flex items-center justify-center space-x-2 text-[11px] tracking-widest text-indigo-300 uppercase">
+                    <span>✨</span>
+                    <span>Time Remaining Until</span>
+                    <span>🌙</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 text-base md:text-lg font-serif-title font-bold text-slate-100">
+                    <span>🎄</span>
+                    <span>December 25, 2026 • 00:00:00 AM</span>
+                    <span>🎄</span>
+                </div>
+            </div>
+
+            <!-- Numbers Grid -->
+            <div id="countdownGrid" class="grid grid-cols-2 gap-3 pt-2">
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col items-center justify-center space-y-1">
+                    <span id="days" class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 glow-number">000</span>
+                    <span class="text-[10px] tracking-widest text-slate-400 uppercase">Days</span>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col items-center justify-center space-y-1">
+                    <span id="hours" class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 glow-number">00</span>
+                    <span class="text-[10px] tracking-widest text-slate-400 uppercase">Hours</span>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col items-center justify-center space-y-1">
+                    <span id="minutes" class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 glow-number">00</span>
+                    <span class="text-[10px] tracking-widest text-slate-400 uppercase">Minutes</span>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col items-center justify-center space-y-1">
+                    <span id="seconds" class="text-3xl md:text-4xl font-serif-title font-bold text-slate-100 glow-number">00</span>
+                    <span class="text-[10px] tracking-widest text-slate-400 uppercase">Seconds</span>
+                </div>
+            </div>
+
+            <div class="text-xs text-indigo-200/80 italic pt-1">
+                ✨ <span id="summaryText">Calculating exact time remaining...</span> ✨
+            </div>
+            
+            <button onclick="triggerChristmasPreview()" class="text-xs text-indigo-400 hover:text-indigo-300 underline underline-offset-4 opacity-80 hover:opacity-100 transition-opacity">
+                ✨ Preview Christmas Morning Mode
+            </button>
+        </section>
+
+        <!-- Footer Accent -->
+        <footer class="text-center pb-4 text-xs text-slate-500">
+            Made with ❤️ for Maan
+        </footer>
+    </main>
+
+    <script>
+        // Audio Toggle
+        const audio = document.getElementById('bgAudio');
+        const musicText = document.getElementById('musicText');
+        
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                musicText.innerText = 'Pause "Mary, Did You Know?"';
+            } else {
+                audio.pause();
+                musicText.innerText = 'Play "Mary, Did You Know?"';
+            }
+        }
+
+        // Countdown Script
+        const targetDate = new Date('December 25, 2026 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(3, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+                document.getElementById('summaryText').innerText = `Exactly ${days} days, ${hours} hrs, and ${minutes} mins remaining for Maan!`;
+            } else {
+                document.getElementById('days').innerText = "000";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+                document.getElementById('summaryText').innerText = "Merry Christmas, dearest Maan! 🎄✨";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Canvas Snow Effect
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const flakes = Array.from({ length: 60 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 1,
+            speed: Math.random() * 1 + 0.5,
+            opacity: Math.random() * 0.5 + 0.3
+        }));
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            flakes.forEach(f => {
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${f.opacity})`;
+                ctx.fill();
+
+                f.y += f.speed;
+                if (f.y > canvas.height) {
+                    f.y = 0;
+                    f.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawSnow);
+        }
+        drawSnow();
+
+        function triggerChristmasPreview() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
 </body>
 </html>
